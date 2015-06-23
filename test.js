@@ -1,53 +1,64 @@
 'use strict';
 
-var _linklist = require('_linklist'),
-    linklist = require('./lib/linklist');
+(function () {
 
-var
-    ITERATIONS = 10,
-    startTime,
-    listObject,
-    i,
-    obj;
+    var _linklist = require('_linklist'),
+        linklist = require('./lib/linklist');
+
+    var
+        ITERATIONS = 100000,
+        startTime,
+        listObject,
+        i,
+        obj;
 
 
-startTime = Date.now();
-console.log("START TEST AT", startTime);
+    startTime = Date.now();
+    console.log("START ORIGINAL TEST AT", startTime);
 
-listObject = {};
-_linklist.init(listObject);
+    listObject = {};
+    _linklist.init(listObject);
 
-for (i = 0; i < ITERATIONS; i++) {
-    _linklist.append(listObject, {
-        idx: i
-    });
-}
-
-while (true) {
-    obj = _linklist.shift(listObject);
-    console.log(obj);
-    if (_linklist.isEmpty(listObject)) {
-        break;
+    for (i = 0; i < ITERATIONS; i++) {
+        _linklist.append(listObject, {
+            idx: i
+        });
     }
-}
 
-console.log("PROCESS TIME IS %d milliseconds", Date.now() - startTime);
+    while (!_linklist.isEmpty(listObject)) {
+        obj = _linklist.shift(listObject);
+        //console.log(obj);
+    }
 
-console.log("");
+    console.log("PROCESS TIME IS %d milliseconds", Date.now() - startTime);
 
-startTime = Date.now();
-console.log("START CHALLENGED TEST AT", startTime);
+    console.log("");
 
-listObject = {};
-listObject.firstList = new linklist.LinkList();
-for (i = 0; i < ITERATIONS; i++) {
-    listObject.firstList.append({
-        idx: i
-    });
-}
-while (!listObject.firstList.isEmpty()) {
-    obj = listObject.firstList.shift();
-    console.log(obj);
-}
+    startTime = Date.now();
+    console.log("START CHALLENGED TEST AT", startTime);
 
-console.log("PROCESS TIME IS %d milliseconds", Date.now() - startTime);
+    listObject = {};
+    listObject.firstList = new linklist.LinkList();
+    for (i = 0; i < ITERATIONS; i++) {
+        listObject.firstList.append({
+            idx: i
+        });
+    }
+    while (!listObject.firstList.isEmpty()) {
+        obj = listObject.firstList.shift();
+        //console.log(obj);
+    }
+
+    // iterator test
+    /*listObject.firstList.forEach(function (item) {
+        listObject.firstList.remove(item);
+    });*/
+
+    // map test
+    /*console.log(listObject.firstList.map(function (item) {
+        return item;
+    }));*/
+
+    console.log("PROCESS TIME IS %d milliseconds", Date.now() - startTime);
+
+}());
