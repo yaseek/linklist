@@ -1,0 +1,10 @@
+{
+    "name": "linklist",
+    "description": "link list challenge",
+    "private": "true",
+    "license": "proprietary",
+    "scripts": {
+        "test": "node ./test.js",
+        "start": "node ./test.js"
+    }
+}
